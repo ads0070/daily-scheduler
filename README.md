@@ -22,7 +22,7 @@
         +-- ...
 ```
 
-DDD(Domain Driven Design)을 바탕으로 하는 레이어드 아키텍처(Layered Architecture)로 구성되어 있습니다.
+DDD(Domain Driven Design)를 바탕으로 하는 레이어드 아키텍처(Layered Architecture)로 구성되어 있습니다.
 
 - Presentation Layer
   - Application의 입출력을 담당하는 Controller
