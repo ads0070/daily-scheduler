@@ -40,16 +40,10 @@ public class UserService {
 
   @Transactional
   public User updateUserById(UUID id, User newUser) {
-    Optional<User> user = userRepository.findById(id);
-
-    if (user.isEmpty()) {
-      throw new RuntimeException(String.format("User id %s is none", id));
-    }
-
-    return user.map(u -> {
+    return userRepository.findById(id).map(u -> {
       u.setName(newUser.getName());
       return userRepository.save(u);
-    }).get();
+    }).orElseThrow(() -> new RuntimeException(String.format("User id %s is none", id)));
   }
 
   @Transactional
