@@ -5,7 +5,7 @@ services:
     build:
       context: ./docker/postgres
     environment:
-      - POSTGRES_PASSWORD=qwerty
+      - POSTGRES_PASSWORD=pass
       - POSTGRES_USER=user
       - POSTGRES_DB=development
     volumes:
@@ -19,7 +19,7 @@ services:
     image: dpage/pgadmin4
     environment:
       - PGADMIN_DEFAULT_EMAIL=user@pgadmin.org
-      - PGADMIN_DEFAULT_PASSWORD=qwerty
+      - PGADMIN_DEFAULT_PASSWORD=pass
     volumes:
       - pgadmin:/var/lib/pgadmin
       - ./docker/postgres/servers.json:/pgadmin4/servers.json
