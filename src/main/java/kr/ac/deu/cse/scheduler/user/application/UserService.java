@@ -58,4 +58,9 @@ public class UserService {
   public void deleteUserById(UUID id) {
     userRepository.deleteById(id);
   }
+
+  public boolean authenticate(String username, String password) {
+    User user = userRepository.findByUsername(username);
+    return passwordEncoder.matches(password, user.getPassword());
+  }
 }

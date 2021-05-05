@@ -59,4 +59,10 @@ public class UserController {
   public void deleteUser(@PathVariable UUID id) {
     userService.deleteUserById(id);
   }
+
+  // TODO: return JWT
+  @PostMapping("/auth")
+  public void auth(@RequestBody UserRequest userRequest) {
+    userService.authenticate(userRequest.getUsername(), userRequest.getPassword());
+  }
 }
