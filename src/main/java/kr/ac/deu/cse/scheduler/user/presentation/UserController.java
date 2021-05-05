@@ -46,11 +46,11 @@ public class UserController {
     return userService.getUserById(id);
   }
 
-  @ResponseBody
-  @PatchMapping("/{id}")
-  public User updateUser(@PathVariable UUID id, @RequestBody User user) {
-    return userService.updateUserById(id, user);
-  }
+  // @ResponseBody
+  // @PatchMapping("/{id}")
+  // public User updateUser(@PathVariable UUID id, @RequestBody User user) {
+  //   return userService.updateUserById(id, user);
+  // }
 
   @ResponseStatus(HttpStatus.NO_CONTENT)
   @DeleteMapping("/{id}")

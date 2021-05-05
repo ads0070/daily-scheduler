@@ -38,13 +38,13 @@ public class UserService {
     return user.get();
   }
 
-  @Transactional
-  public User updateUserById(UUID id, User newUser) {
-    return userRepository.findById(id).map(u -> {
-      u.setName(newUser.getName());
-      return userRepository.save(u);
-    }).orElseThrow(() -> new RuntimeException(String.format("User id %s is none", id)));
-  }
+  // @Transactional
+  // public User updateUserById(UUID id, User newUser) {
+  //   return userRepository.findById(id).map(u -> {
+  //     u.setName(newUser.getName());
+  //     return userRepository.save(u);
+  //   }).orElseThrow(() -> new RuntimeException(String.format("User id %s is none", id)));
+  // }
 
   @Transactional
   public void deleteUserById(UUID id) {
