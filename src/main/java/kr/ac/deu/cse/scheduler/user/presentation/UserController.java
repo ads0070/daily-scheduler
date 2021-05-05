@@ -29,13 +29,13 @@ public class UserController {
   }
 
   @ResponseBody
-  @PostMapping("/")
+  @PostMapping
   public User createUser(@RequestBody User user) {
     return userService.createUser(user);
   }
 
   @ResponseBody
-  @GetMapping("/")
+  @GetMapping
   public List<User> getAllUsers() {
     return userService.getAllUsers();
   }
