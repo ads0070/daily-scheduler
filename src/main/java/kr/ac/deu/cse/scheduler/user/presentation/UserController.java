@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.UUID;
 import kr.ac.deu.cse.scheduler.user.application.UserService;
 import kr.ac.deu.cse.scheduler.user.domain.User;
+import kr.ac.deu.cse.scheduler.user.domain.UserRequest;
+import kr.ac.deu.cse.scheduler.user.domain.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpStatus;
@@ -30,8 +32,8 @@ public class UserController {
 
   @ResponseBody
   @PostMapping
-  public User createUser(@RequestBody User user) {
-    return userService.createUser(user);
+  public UserResponse createUser(@RequestBody UserRequest userRequest) {
+    return userService.createUser(userRequest);
   }
 
   @ResponseBody
@@ -42,7 +44,7 @@ public class UserController {
 
   @ResponseBody
   @GetMapping("/{id}")
-  public User getOneUser(@PathVariable UUID id) {
+  public UserResponse getOneUser(@PathVariable UUID id) {
     return userService.getUserById(id);
   }
 
