@@ -22,12 +22,12 @@ public class User {
   @Id
   @GeneratedValue
   private UUID id;
-  private String name;
+  private String username;
   private String password;
 
   @Builder
-  public User(String name, String password) {
-    this.name = name;
+  public User(String username, String password) {
+    this.username = username;
     this.password = password;
   }
 }
