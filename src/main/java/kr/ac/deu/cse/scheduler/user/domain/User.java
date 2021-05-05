@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,8 +23,11 @@ public class User {
   @GeneratedValue
   private UUID id;
   private String name;
+  private String password;
 
-  public User(String name) {
+  @Builder
+  public User(String name, String password) {
     this.name = name;
+    this.password = password;
   }
 }
