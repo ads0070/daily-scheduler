@@ -1,10 +1,10 @@
 debug: true
 spring:
   datasource:
-    driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/development
     username: user
     password: pass
+    driver-class-name: org.postgresql.Driver
   jpa:
     database: postgresql
     show-sql: true
