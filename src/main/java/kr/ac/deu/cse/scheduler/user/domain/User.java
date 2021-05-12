@@ -2,6 +2,7 @@ package kr.ac.deu.cse.scheduler.user.domain;
 
 import java.util.List;
 import java.util.UUID;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,7 +27,10 @@ public class User {
   @Id
   @GeneratedValue
   private UUID id;
+
+  @Column(unique = true, length = 32)
   private String username;
+
   private String password;
 
   @ElementCollection(fetch = FetchType.EAGER)
