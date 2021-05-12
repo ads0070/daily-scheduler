@@ -1,10 +1,14 @@
 package kr.ac.deu.cse.scheduler.user.domain;
 
+import java.util.List;
 import java.util.UUID;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import kr.ac.deu.cse.scheduler.auth.domain.Authority;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +28,9 @@ public class User {
   private UUID id;
   private String username;
   private String password;
+
+  @ElementCollection(fetch = FetchType.EAGER)
+  List<Authority> authorities;
 
   @Builder
   public User(String username, String password) {
