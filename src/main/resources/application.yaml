@@ -4,6 +4,10 @@ spring:
   data:
     rest:
       base-path: /api
+  security:
+    user:
+      name: user
+      password: pass
 
 ---
 
