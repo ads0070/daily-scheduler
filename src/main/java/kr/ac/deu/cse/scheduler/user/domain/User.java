@@ -31,6 +31,7 @@ public class User {
   @Column(unique = true, length = 32)
   private String username;
 
+  @Column(nullable = false)
   private String password;
 
   @ElementCollection(fetch = FetchType.EAGER)
