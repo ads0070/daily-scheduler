@@ -1,0 +1,26 @@
+@startuml user
+class User <<Entity>> {
+  -id: UUID
+  -name: String
+}
+class UserController <<Controller>> {
+  -userService
+  +createUser() : User
+  +getAllUsers() : List<User>
+  +getOneUser() : User
+  +upadteUser() : User
+  +deleteUser() : void
+}
+class UserService <<Service>> {
+  -userRepository
+  +createUser(User) : User
+  +deleteUserById(UUID) : void
+  +getAllUsers() : List<User>
+  +getUserById(UUID) : User
+  +upadteUserById(UUID, User) : User
+}
+interface UserJpaRepository <<Repository>>
+
+UserController ..> UserService
+UserService ..> UserJpaRepository
+@enduml

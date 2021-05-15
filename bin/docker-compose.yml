@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  postgres:
+    build:
+      context: ./docker/postgres
+    environment:
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_USER=user
+      - POSTGRES_DB=development
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - bridge
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=user@pgadmin.org
+      - PGADMIN_DEFAULT_PASSWORD=pass
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+      - ./docker/postgres/servers.json:/pgadmin4/servers.json
+    ports:
+      - "5050:80"
+    networks:
+      - bridge
+    depends_on:
+      - postgres
+
+volumes:
+  postgres:
+  pgadmin:
+
+networks:
+  bridge:
