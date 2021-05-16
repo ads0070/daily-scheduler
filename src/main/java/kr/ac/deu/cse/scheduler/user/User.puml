@@ -1,0 +1,92 @@
+@startuml User
+' !theme resume-light
+' !theme cerulean-outline
+' !theme sketchy-outline
+
+package domain {
+  class User <<Entity>> {
+    -id : UUID
+    -username : String
+    -password : String
+    ~authorities : List<Authority>
+    -status : UserState
+    +User(Builder)
+    {static} +builder() : Builder
+  }
+
+  class Builder <<static>> {
+    +username(String) : Builder
+    +password(String) : Builder
+    +status() : UserState
+    +build() : User
+  }
+
+  note bottom of Builder: Builder Pattern
+
+  class UserState <<Embeddable>> {
+    -active : boolean
+    +toggleActiveState(User) : void
+    +isActive() : boolean
+  }
+
+  note left of UserState: State Pattern
+
+  class ActivatedUserState extends UserState {
+    +ActivatedUserState()
+  }
+
+  class DeactivatedUserState extends UserState {
+    +DeactivatedUserState()
+  }
+}
+
+User *--> Builder
+User o..> UserState
+
+package domain {
+  class UserRequest {
+    -username : String
+    -password : String
+  }
+
+  class UserResponse {
+    -id : UUID
+    -username : String
+    -isActive : boolean
+  }
+}
+
+package presentation {
+  class UserController <<Controller>> {
+    -userService : UserService
+    +createUser(UserRequest) : UserResponse
+    +getAllUsers() : List<User>
+    +getOneUser() : UserResponse
+    ' +upadteUser() : User
+    +deleteUser(UUID) : void
+  }
+}
+
+package application {
+  class UserService <<Service>> {
+    -userRepository : UserJpaRepository
+    +createUser(User) : User
+    +deleteUserById(UUID) : void
+    +getAllUsers() : List<User>
+    +getUserById(UUID) : User
+    +upadteUserById(UUID, User) : User
+  }
+}
+
+package infrastructure {
+  interface UserJpaRepository <<Repository>>
+}
+
+UserController ..> UserRequest
+UserController ..> UserResponse
+UserController ..> UserService
+UserService ..> UserJpaRepository
+UserService ..> User
+UserJpaRepository ..> User
+
+@enduml
