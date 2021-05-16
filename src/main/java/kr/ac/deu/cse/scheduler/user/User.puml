@@ -25,7 +25,6 @@ package domain {
 
   class UserState <<Embeddable>> {
     -active : boolean
-    +toggleActiveState(User) : void
     +isActive() : boolean
   }
 

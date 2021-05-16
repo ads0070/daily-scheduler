@@ -5,6 +5,7 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class UserState {
+  // TODO: improve class
 
   @Column
   private boolean active;
@@ -14,10 +15,6 @@ public class UserState {
 
   public UserState(boolean active) {
     this.active = active;
-  }
-
-  public void toggleActiveState(User user) {
-    this.active = !user.getStatus().isActive();
   }
 
   public boolean isActive() {
