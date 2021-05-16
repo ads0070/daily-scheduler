@@ -30,6 +30,11 @@ services:
     depends_on:
       - postgres
 
+  plantuml:
+    image: plantuml/plantuml-server:jetty
+    ports:
+      - "8080:8080"
+
 volumes:
   postgres:
   pgadmin:
