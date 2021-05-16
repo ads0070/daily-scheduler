@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import kr.ac.deu.cse.scheduler.auth.domain.Authority;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -37,9 +36,41 @@ public class User {
   @ElementCollection(fetch = FetchType.EAGER)
   List<Authority> authorities;
 
-  @Builder
+  // @Builder
   public User(String username, String password) {
     this.username = username;
     this.password = password;
+  }
+
+  public User(Builder builder) {
+    this.username = builder.username;
+    this.password = builder.password;
+  }
+
+  public static Builder builder() {
+    return new Builder();
+  }
+
+  public static class Builder {
+
+    private String username;
+    private String password;
+
+    Builder() {
+    }
+
+    public Builder username(String value) {
+      username = value;
+      return this;
+    }
+
+    public Builder password(String value) {
+      password = value;
+      return this;
+    }
+
+    public User build() {
+      return new User(this);
+    }
   }
 }
