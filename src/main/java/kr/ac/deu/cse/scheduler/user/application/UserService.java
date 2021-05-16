@@ -1,7 +1,6 @@
 package kr.ac.deu.cse.scheduler.user.application;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import javax.transaction.Transactional;
 import kr.ac.deu.cse.scheduler.user.domain.User;
@@ -27,9 +26,16 @@ public class UserService {
   @Transactional
   public UserResponse createUser(final UserRequest userRequest) {
     String hashedPassword = passwordEncoder.encode(userRequest.getPassword());
-    User user = User.builder().username(userRequest.getUsername()).password(hashedPassword).build();
+    User user = User.builder()
+      .username(userRequest.getUsername())
+      .password(hashedPassword)
+      .build();
     user = userRepository.save(user);
-    return new UserResponse(user.getId(), user.getUsername());
+
+    return UserResponse.builder()
+      .id(user.getId())
+      .username(user.getUsername())
+      .build();
   }
 
   public List<User> getAllUsers() {
@@ -37,13 +43,13 @@ public class UserService {
   }
 
   public UserResponse getUserById(UUID id) {
-    Optional<User> user = userRepository.findById(id);
+    User user = userRepository.findById(id)
+      .orElseThrow(() -> new RuntimeException(String.format("User id %s is none", id)));
 
-    if (user.isEmpty()) {
-      throw new RuntimeException(String.format("User id %s is none", id));
-    }
-
-    return new UserResponse(user.get().getId(), user.get().getUsername());
+    return UserResponse.builder()
+      .id(user.getId())
+      .username(user.getUsername())
+      .build();
   }
 
   // @Transactional
