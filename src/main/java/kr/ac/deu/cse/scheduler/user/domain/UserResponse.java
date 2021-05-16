@@ -10,4 +10,5 @@ public class UserResponse {
 
   UUID id;
   String username;
+  boolean isActive;
 }

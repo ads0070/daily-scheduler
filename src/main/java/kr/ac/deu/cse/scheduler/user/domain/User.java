@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -36,15 +37,13 @@ public class User {
   @ElementCollection(fetch = FetchType.EAGER)
   List<Authority> authorities;
 
-  // @Builder
-  public User(String username, String password) {
-    this.username = username;
-    this.password = password;
-  }
+  @Embedded
+  private UserState status;
 
   public User(Builder builder) {
     this.username = builder.username;
     this.password = builder.password;
+    this.status = builder.status;
   }
 
   public static Builder builder() {
@@ -55,6 +54,7 @@ public class User {
 
     private String username;
     private String password;
+    private UserState status;
 
     Builder() {
     }
@@ -66,6 +66,11 @@ public class User {
 
     public Builder password(String value) {
       password = value;
+      return this;
+    }
+
+    public Builder state(UserState value) {
+      status = value;
       return this;
     }
 
