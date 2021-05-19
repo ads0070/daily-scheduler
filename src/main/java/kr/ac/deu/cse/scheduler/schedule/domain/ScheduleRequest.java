@@ -7,9 +7,10 @@ import lombok.Value;
 public class ScheduleRequest {
 	private String title;
 	private String groupName;
-	private String startDate;
 	private String endDate;
 	private String colorLabel;
+	private boolean topFixed;
+	private String memo;
 	private int importance;
 	private boolean done;
 }

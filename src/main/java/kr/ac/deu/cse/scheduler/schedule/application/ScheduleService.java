@@ -1,7 +1,6 @@
 package kr.ac.deu.cse.scheduler.schedule.application;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import javax.transaction.Transactional;
 import kr.ac.deu.cse.scheduler.schedule.domain.Schedule;
@@ -23,29 +22,55 @@ public class ScheduleService {
 	
 	@Transactional
 	public ScheduleResponse createSchedule(final ScheduleRequest scheduleRequest) {
-		Schedule schedule = Schedule.builder().title(scheduleRequest.getTitle()).
-				groupName(scheduleRequest.getGroupName()).startDate(scheduleRequest.getStartDate()).
-				endDate(scheduleRequest.getEndDate()).colorLabel(scheduleRequest.getColorLabel()).
-				importance(scheduleRequest.getImportance()).done(scheduleRequest.isDone()).build();
+		
+		Schedule schedule = Schedule.builder().title(scheduleRequest.getTitle())
+											  .groupName(scheduleRequest.getGroupName())
+											  .endDate(scheduleRequest.getEndDate())
+											  .colorLabel(scheduleRequest.getColorLabel())
+											  .topFixed(scheduleRequest.isTopFixed())
+											  .memo(scheduleRequest.getMemo())
+											  .importance(scheduleRequest.getImportance())
+											  .done(scheduleRequest.isDone())
+											  .build();
+		
 		schedule = scheduleRepository.save(schedule);
-	    return new ScheduleResponse(schedule.getId(),schedule.getTitle(),schedule.getGroupName(),schedule.getStartDate(),
-	    		schedule.getEndDate(),schedule.getColorLabel(),schedule.getImportance(),schedule.isDone());
+		
+	    return ScheduleResponse.builder()
+	    		.id(schedule.getId())
+	    		.title(schedule.getTitle())
+				.groupName(schedule.getGroupName())
+				.endDate(schedule.getEndDate())
+				.colorLabel(schedule.getColorLabel())
+				.topFixed(schedule.isTopFixed())
+				.memo(schedule.getMemo())
+				.importance(schedule.getImportance())
+				.done(schedule.isDone())
+				.build();
 	}
 	
 	public List<Schedule> getAllSchedules() {
 		return scheduleRepository.findAll();
 	}
 	
-	public ScheduleResponse getScheduleById(UUID id) {
-		Optional<Schedule> schedule = scheduleRepository.findById(id);
-		
-		if (schedule.isEmpty()) {
-			throw new RuntimeException(String.format("Schedule id %s is none", id));
-		}
-		
-		return new ScheduleResponse(schedule.get().getId(),schedule.get().getTitle(),schedule.get().getGroupName(),schedule.get().getStartDate(),
-	    		schedule.get().getEndDate(),schedule.get().getColorLabel(),schedule.get().getImportance(),schedule.get().isDone());
+	public List<Schedule> getGroupSchedules(String groupName) {
+		return scheduleRepository.findByGroupName(groupName);
 	}
+	
+	public ScheduleResponse getScheduleById(UUID id) {
+	    Schedule schedule = scheduleRepository.findById(id)
+	      .orElseThrow(() -> new RuntimeException(String.format("User id %s is none", id)));
+
+	    return ScheduleResponse.builder()
+	    		.id(schedule.getId())
+	    		.title(schedule.getTitle())
+				.groupName(schedule.getGroupName())
+				.endDate(schedule.getEndDate())
+				.colorLabel(schedule.getColorLabel())
+				.topFixed(schedule.isTopFixed())
+				.memo(schedule.getMemo())
+				.importance(schedule.getImportance())
+				.done(schedule.isDone()).build();
+	  }
 	
 	@Transactional
 	public void deleteScheduleById(UUID id) {
