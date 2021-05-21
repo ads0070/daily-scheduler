@@ -23,10 +23,10 @@ public abstract class Schedule {
 
   @Id
   @GeneratedValue
-  private UUID id;
+  protected UUID id;
 
-  private String title;
-  private String memo;
+  protected String title;
+  protected String memo;
 
   public abstract boolean isFinished();
 }

@@ -3,6 +3,7 @@ package kr.ac.deu.cse.scheduler.schedule.domain;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,7 +20,10 @@ public class Task extends Schedule {
   private Date beginDate;
   private Date endDate;
 
-  public Task(Date beginDate, Date endDate) {
+  @Builder
+  public Task(String title, String memo, Date beginDate, Date endDate) {
+    this.title = title;
+    this.memo = memo;
     this.beginDate = beginDate;
     this.endDate = endDate;
   }
