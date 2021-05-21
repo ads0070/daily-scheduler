@@ -3,12 +3,12 @@ package kr.ac.deu.cse.scheduler.user.presentation;
 import java.util.List;
 import java.util.UUID;
 import kr.ac.deu.cse.scheduler.user.application.UserService;
-import kr.ac.deu.cse.scheduler.user.domain.User;
 import kr.ac.deu.cse.scheduler.user.domain.UserRequest;
 import kr.ac.deu.cse.scheduler.user.domain.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -23,46 +23,48 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @RepositoryRestController
 public class UserController {
 
-  private final UserService userService;
+  private final UserService service;
 
   @Autowired
-  public UserController(UserService userService) {
-    this.userService = userService;
+  public UserController(UserService service) {
+    this.service = service;
   }
 
   @ResponseBody
   @PostMapping
-  public UserResponse createUser(@RequestBody UserRequest userRequest) {
-    return userService.createUser(userRequest);
+  public ResponseEntity<?> createResource(@RequestBody UserRequest request) {
+    return ResponseEntity.ok(service.createUser(request));
   }
 
   @ResponseBody
   @GetMapping
-  public List<User> getAllUsers() {
-    return userService.getAllUsers();
+  public ResponseEntity<?> getAllUsers() {
+    List<UserResponse> response = service.retrieveUsers();
+
+    return ResponseEntity.ok(response);
   }
 
   @ResponseBody
   @GetMapping("/{id}")
-  public UserResponse getOneUser(@PathVariable UUID id) {
-    return userService.getUserById(id);
+  public ResponseEntity<?> getOneUser(@PathVariable UUID id) {
+    UserResponse response = service.retrieveUserById(id);
+
+    return ResponseEntity.ok(response);
   }
 
-  // @ResponseBody
-  // @PatchMapping("/{id}")
-  // public User updateUser(@PathVariable UUID id, @RequestBody User user) {
-  //   return userService.updateUserById(id, user);
-  // }
+  @ResponseBody
+  @PatchMapping("/{id}")
+  public ResponseEntity<?> updateUser(@PathVariable UUID id, @RequestBody UserRequest request) {
+    UserResponse response = service.updateUserById(id, request);
+
+    return ResponseEntity.ok(response);
+  }
 
   @ResponseStatus(HttpStatus.NO_CONTENT)
   @DeleteMapping("/{id}")
-  public void deleteUser(@PathVariable UUID id) {
-    userService.deleteUserById(id);
-  }
+  public ResponseEntity<?> deleteUser(@PathVariable UUID id) {
+    service.deleteUserById(id);
 
-  // TODO: return JWT
-  @PostMapping("/auth")
-  public void auth(@RequestBody UserRequest userRequest) {
-    userService.authenticate(userRequest.getUsername(), userRequest.getPassword());
+    return ResponseEntity.noContent().build();
   }
 }

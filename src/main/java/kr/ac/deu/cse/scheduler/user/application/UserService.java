@@ -2,6 +2,7 @@ package kr.ac.deu.cse.scheduler.user.application;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import kr.ac.deu.cse.scheduler.user.domain.ActivatedUserState;
 import kr.ac.deu.cse.scheduler.user.domain.User;
@@ -15,24 +16,25 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-  private final UserJpaRepository userRepository;
+  private final UserJpaRepository repository;
   private final PasswordEncoder passwordEncoder;
 
   @Autowired
-  public UserService(UserJpaRepository userRepository, PasswordEncoder passwordEncoder) {
-    this.userRepository = userRepository;
+  public UserService(UserJpaRepository repository, PasswordEncoder passwordEncoder) {
+    this.repository = repository;
     this.passwordEncoder = passwordEncoder;
   }
 
   @Transactional
-  public UserResponse createUser(final UserRequest userRequest) {
-    String hashedPassword = passwordEncoder.encode(userRequest.getPassword());
+  public UserResponse createUser(final UserRequest newUser) {
+    String hashedPassword = passwordEncoder.encode(newUser.getPassword());
     User user = User.builder()
-      .username(userRequest.getUsername())
+      .username(newUser.getUsername())
       .password(hashedPassword)
       .state(new ActivatedUserState())
       .build();
-    user = userRepository.save(user);
+
+    user = repository.save(user);
 
     return UserResponse.builder()
       .id(user.getId())
@@ -41,36 +43,46 @@ public class UserService {
       .build();
   }
 
-  public List<User> getAllUsers() {
-    return userRepository.findAll();
+  public List<UserResponse> retrieveUsers() {
+    return repository.findAll().stream()
+      .map(user -> UserResponse.builder()
+        .id(user.getId())
+        .username(user.getUsername())
+        .build()
+      ).collect(Collectors.toList());
   }
 
-  public UserResponse getUserById(UUID id) {
-    User user = userRepository.findById(id)
-      .orElseThrow(() -> new RuntimeException(String.format("User id %s is none", id)));
+  public UserResponse retrieveUserById(UUID id) {
+    return repository.findById(id)
+      .map(user -> UserResponse.builder()
+        .id(user.getId())
+        .username(user.getUsername())
+        .isActive(user.getStatus().isActive())
+        .build()
+      ).orElseThrow(() -> new RuntimeException(String.format("User id %s is none", id)));
+  }
+
+  @Transactional
+  public UserResponse updateUserById(UUID id, UserRequest newUser) {
+    User updatedUser = repository.findById(id)
+      .map(user -> {
+        user.setUsername(newUser.getUsername());
+        return repository.save(user);
+      }).orElseThrow(() -> new RuntimeException(String.format("User id %s is none", id)));
 
     return UserResponse.builder()
-      .id(user.getId())
-      .username(user.getUsername())
-      .isActive(user.getStatus().isActive())
+      .id(updatedUser.getId())
+      .username(updatedUser.getUsername())
       .build();
   }
-
-  // @Transactional
-  // public User updateUserById(UUID id, User newUser) {
-  //   return userRepository.findById(id).map(u -> {
-  //     u.setName(newUser.getName());
-  //     return userRepository.save(u);
-  //   }).orElseThrow(() -> new RuntimeException(String.format("User id %s is none", id)));
-  // }
 
   @Transactional
   public void deleteUserById(UUID id) {
-    userRepository.deleteById(id);
+    repository.deleteById(id);
   }
 
   public boolean authenticate(String username, String password) {
-    User user = userRepository.findByUsername(username);
+    User user = repository.findByUsername(username);
     return passwordEncoder.matches(password, user.getPassword());
   }
 }
