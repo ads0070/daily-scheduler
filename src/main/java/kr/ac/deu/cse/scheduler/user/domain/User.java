@@ -38,12 +38,20 @@ public class User {
   List<Authority> authorities;
 
   @Embedded
-  private UserState status;
+  private UserState state;
 
   public User(Builder builder) {
     this.username = builder.username;
     this.password = builder.password;
-    this.status = builder.status;
+    this.state = builder.state;
+  }
+
+  public void setUserState(UserState state) {
+    this.state = state;
+  }
+
+  public UserResponse getUserEntity() {
+    return this.state.getUserEntity(this);
   }
 
   public static Builder builder() {
@@ -54,7 +62,7 @@ public class User {
 
     private String username;
     private String password;
-    private UserState status;
+    private UserState state;
 
     Builder() {
     }
@@ -70,7 +78,7 @@ public class User {
     }
 
     public Builder state(UserState value) {
-      status = value;
+      state = value;
       return this;
     }
 

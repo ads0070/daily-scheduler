@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
-import kr.ac.deu.cse.scheduler.user.domain.ActivatedUserState;
+import kr.ac.deu.cse.scheduler.user.domain.ActiveUserState;
 import kr.ac.deu.cse.scheduler.user.domain.User;
 import kr.ac.deu.cse.scheduler.user.domain.UserRequest;
 import kr.ac.deu.cse.scheduler.user.domain.UserResponse;
@@ -31,35 +31,24 @@ public class UserService {
     User user = User.builder()
       .username(newUser.getUsername())
       .password(hashedPassword)
-      .state(new ActivatedUserState())
+      .state(new ActiveUserState())
       .build();
 
     user = repository.save(user);
 
-    return UserResponse.builder()
-      .id(user.getId())
-      .username(user.getUsername())
-      .isActive(user.getStatus().isActive())
-      .build();
+    return user.getUserEntity();
   }
 
   public List<UserResponse> retrieveUsers() {
     return repository.findAll().stream()
-      .map(user -> UserResponse.builder()
-        .id(user.getId())
-        .username(user.getUsername())
-        .build()
-      ).collect(Collectors.toList());
+      .map(User::getUserEntity)
+      .collect(Collectors.toList());
   }
 
   public UserResponse retrieveUserById(UUID id) {
     return repository.findById(id)
-      .map(user -> UserResponse.builder()
-        .id(user.getId())
-        .username(user.getUsername())
-        .isActive(user.getStatus().isActive())
-        .build()
-      ).orElseThrow(() -> new RuntimeException(String.format("User id %s is none", id)));
+      .map(User::getUserEntity)
+      .orElseThrow(() -> new RuntimeException(String.format("User id %s is none", id)));
   }
 
   @Transactional
