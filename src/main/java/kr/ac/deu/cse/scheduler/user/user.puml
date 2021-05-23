@@ -55,8 +55,17 @@ package user {
       +getUserEntity(User) : UserResponse
     }
 
-    note bottom of Builder: Builder Pattern
-    note left of UserState: State Pattern
+    class UserStateFactory {
+      +getState(boolean) : UserState
+    }
+
+    UserStateFactory - UserState
+    UserStateFactory --> ActiveUserState
+    UserStateFactory --> DeactivatedUserState
+
+    note top of Builder: Builder Pattern
+    note right of UserState: State Pattern
+    note bottom of UserStateFactory: Factory Pattern
   }
 
   package presentation {
