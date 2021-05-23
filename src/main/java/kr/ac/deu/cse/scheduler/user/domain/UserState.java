@@ -20,8 +20,7 @@ public class UserState {
   }
 
   public UserResponse getUserEntity(User user) {
-    return this.active
-      ? new ActiveUserState().getUserEntity(user)
-      : new DeactivatedUserState().getUserEntity(user);
+    UserStateFactory factory = new UserStateFactory();
+    return factory.getState(this.active).getUserEntity(user);
   }
 }
