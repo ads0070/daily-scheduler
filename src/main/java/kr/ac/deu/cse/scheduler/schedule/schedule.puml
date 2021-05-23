@@ -1,0 +1,100 @@
+@startuml schedule
+
+package schedule {
+
+  package domain {
+    abstract class Schedule <<Entity>> {
+      #id : UUID
+      #title : String
+      #memo : String
+      {abstract} +isFinished() : boolean
+    }
+
+    class Task <<Entity>> extends Schedule {
+      -beginDate : Date
+      -endDate : Date
+      +isFinished() : boolean
+    }
+
+    class Todo <<Entity>> extends Schedule {
+      -groupName : String
+      -colorLabel : String
+      -topFixed : boolean
+      -done : boolean
+      +isFinished() : boolean
+    }
+  }
+
+  package infrastructure {
+    interface ScheduleJpaRepository<T extends Schedule> <<@NoBeansRepository>> {
+
+    }
+
+    interface TaskJpaRepository <<Repository>> extends ScheduleJpaRepository {
+
+    }
+
+    interface TodoJpaRepository <<Repository>> extends ScheduleJpaRepository {
+
+    }
+  }
+
+  package application {
+    class TaskService <<Service>> {
+      -repository : TaskJpaRepository
+      +createTask(TaskRequest) : TaskResponse
+      +retrieveTasks() : List<TaskResponse>
+      +retrieveTaskById(UUID) : TaskResponse
+      +updateTaskById(UUID, TaskRequest) : TaskResponse
+      +deleteTaskById(UUID) : void
+    }
+
+    class TodoService <<Service>> {
+      -repository : TodoJpaRepository
+      +createTodo(TodoRequest) : TodoResponse
+      +retrieveTodos() : List<TodoResponse>
+      +retrieveTodoById(UUID) : TodoResponse
+      +updateTodoById(UUID, TodoRequest) : TodoResponse
+      +deleteTodoById(UUID) : void
+    }
+  }
+
+  package presentation {
+    class TaskController {
+      -service : TaskService
+      +createResource(TaskRequest) : ResponseEntity<?>
+      +retrieveResources() : ResponseEntity<?>
+      +retrieveResource(UUID) : ResponseEntity<?>
+      +updateResource(UUID, TaskRequest) : ResponseEntity<?>
+      +deleteResource(UUID) : ResponseEntity<?>
+    }
+
+    class TodoController {
+      -service : TodoService
+      +createResource(TodoRequest) : ResponseEntity<?>
+      +retrieveResources() : ResponseEntity<?>
+      +retrieveResource(UUID) : ResponseEntity<?>
+      +updateResource(UUID, TodoRequest) : ResponseEntity<?>
+      +deleteResource(UUID) : ResponseEntity<?>
+    }
+  }
+
+  note "Strategy" as Strategy
+  Strategy .. Schedule
+
+  note "Facade" as Facade
+  Facade .. TaskService
+  Facade .. TodoService
+}
+
+TaskController --> TaskService
+TaskService --> TaskJpaRepository
+
+TodoController --> TodoService
+TodoService --> TodoJpaRepository
+
+ScheduleJpaRepository ..> Schedule
+TaskJpaRepository ..> Task
+TodoJpaRepository ..> Todo
+
+@enduml

@@ -1,0 +1,104 @@
+@startuml user
+' !theme resume-light
+' !theme cerulean-outline
+' !theme sketchy-outline
+
+package user {
+
+  package domain {
+    class User <<Entity>> {
+      -id : UUID
+      -username : String
+      -password : String
+      ~authorities : List<Authority>
+      -status : UserState
+      +User(Builder)
+      {static} +builder() : Builder
+    }
+
+    class Builder <<static>> {
+      +username(String) : Builder
+      +password(String) : Builder
+      +state() : UserState
+      +build() : User
+    }
+
+    class UserRequest {
+      -username : String
+      -password : String
+    }
+
+    class UserResponse {
+      -id : UUID
+      -username : String
+      -isActive : boolean
+    }
+
+    class UserState <<Embeddable>> {
+      #active : boolean
+      +onActivate(User) : void
+      +onDeactivate(User) : void
+      +getUserEntity(User) : UserResponse
+    }
+
+    class ActiveUserState extends UserState {
+      +ActiveUserState()
+      +onActivate(User) : void
+      +onDeactivate(User) : void
+      +getUserEntity(User) : UserResponse
+    }
+
+    class DeactivatedUserState extends UserState {
+      +DeactivatedUserState()
+      +onActivate(User) : void
+      +onDeactivate(User) : void
+      +getUserEntity(User) : UserResponse
+    }
+
+    note bottom of Builder: Builder Pattern
+    note left of UserState: State Pattern
+  }
+
+  package presentation {
+    class UserController <<Controller>> {
+      -userService : UserService
+      +createResource(UserRequest) : ResponseEntity<?>
+      +getAllUsers() : ResponseEntity<?>
+      +getOneUser(UUID) : ResponseEntity<?>
+      +upadteUser(UUID, UserRequest) : ResponseEntity<?>
+      +deleteUser(UUID) : ResponseEntity<?>
+    }
+  }
+
+  package application {
+    class UserService <<Service>> {
+      -userRepository : UserJpaRepository
+      +createUser(UserRequest) : UserResponse
+      +retrieveUsers() : List<UserResponse>
+      +retrieveUserById(UUID) : UserResponse
+      +upadteUserById(UUID, UserRequest) : UserResponse
+      +deleteUserById(UUID) : void
+    }
+
+    note "Facade Pattern" as Facade
+    Facade -> UserService
+  }
+
+  package infrastructure {
+    interface UserJpaRepository <<Repository>>
+  }
+
+  User *--> Builder
+  User o--> UserState
+
+  UserController ..> UserService
+  UserService ..> UserJpaRepository
+
+  UserController ..> UserRequest
+  UserController ..> UserResponse
+  UserService ..> UserRequest
+  UserService ..> UserResponse
+  UserJpaRepository ..> User
+}
+
+@enduml
