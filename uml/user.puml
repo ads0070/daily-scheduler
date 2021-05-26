@@ -3,17 +3,6 @@
 ' !theme cerulean-outline
 ' !theme sketchy-outline
 
-package interfaces {
-  abstract class AbstractController<R, ID> {
-    {abstract} +create(R) : ResponseEntity<?>
-    {abstract} +readAll() : ResponseEntity<?>
-    {abstract} +readOne(ID) : ResponseEntity<?>
-    {abstract} +update(ID, R) : ResponseEntity<?>
-    {abstract} +delete(ID) : ResponseEntity<?>
-  }
-}
-note left: Template Method
-
 package user {
 
   package domain {

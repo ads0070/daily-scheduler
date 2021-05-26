@@ -1,0 +1,29 @@
+@startuml state
+
+interface User {
+  getUsername() : String
+  getPassword() : String
+  setState(UserState) : void
+}
+
+interface UserState {
+  onActivate(User) : void
+  onDeactivate(User) : void
+}
+
+User o--> UserState
+
+class UserStatePending implements UserState {
+  onActivate(User) : void
+  onDeactivate(User) : void
+}
+
+class UserStateActivated implements UserState {
+  onDeactivate(User) : void
+}
+
+class UserStateDeactivated implements UserState {
+  onActivate(User) : void
+}
+
+@enduml

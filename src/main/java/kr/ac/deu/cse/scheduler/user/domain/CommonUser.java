@@ -5,6 +5,8 @@ public class CommonUser implements User {
   String username;
   String password;
 
+  UserState state;
+
   public CommonUser(String username, String password) {
     this.username = username;
     this.password = password;
@@ -18,5 +20,10 @@ public class CommonUser implements User {
   @Override
   public String getPassword() {
     return password;
+  }
+
+  @Override
+  public void setState(UserState state) {
+    this.state = state;
   }
 }

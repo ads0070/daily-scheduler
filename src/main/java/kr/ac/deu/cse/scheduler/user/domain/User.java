@@ -5,4 +5,6 @@ public interface User {
   String getUsername();
 
   String getPassword();
+
+  void setState(UserState state);
 }
