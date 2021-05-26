@@ -1,0 +1,24 @@
+@startuml factory
+
+interface User {
+  ~getUserName() : String
+  ~getPassword() : String
+}
+
+interface UserFactory {
+  ~create(String, String) : User
+}
+
+class CommonUser implements User {
+  ~username : String
+  ~password : String
+}
+
+class CommonUserFactory implements UserFactory {
+  ~create(String, String) : CommonUser
+}
+
+UserFactory .> User
+CommonUserFactory .> CommonUser
+
+@enduml

@@ -32,29 +32,30 @@ public class UserController {
 
   @ResponseBody
   @PostMapping
-  public ResponseEntity<?> createResource(@RequestBody UserRequest request) {
+  public ResponseEntity<?> create(@RequestBody final UserRequest request) {
     return ResponseEntity.ok(service.createUser(request));
   }
 
   @ResponseBody
   @GetMapping
-  public ResponseEntity<?> getAllUsers() {
-    List<UserResponse> response = service.retrieveUsers();
+  public ResponseEntity<?> readAll() {
+    List<UserResponse> response = service.getUsers();
 
     return ResponseEntity.ok(response);
   }
 
   @ResponseBody
   @GetMapping("/{id}")
-  public ResponseEntity<?> getOneUser(@PathVariable UUID id) {
-    UserResponse response = service.retrieveUserById(id);
+  public ResponseEntity<?> readOne(@PathVariable final UUID id) {
+    UserResponse response = service.getUserById(id);
 
     return ResponseEntity.ok(response);
   }
 
   @ResponseBody
   @PatchMapping("/{id}")
-  public ResponseEntity<?> updateUser(@PathVariable UUID id, @RequestBody UserRequest request) {
+  public ResponseEntity<?> update(@PathVariable final UUID id,
+    @RequestBody final UserRequest request) {
     UserResponse response = service.updateUserById(id, request);
 
     return ResponseEntity.ok(response);
@@ -62,7 +63,7 @@ public class UserController {
 
   @ResponseStatus(HttpStatus.NO_CONTENT)
   @DeleteMapping("/{id}")
-  public ResponseEntity<?> deleteUser(@PathVariable UUID id) {
+  public ResponseEntity<?> delete(@PathVariable final UUID id) {
     service.deleteUserById(id);
 
     return ResponseEntity.noContent().build();

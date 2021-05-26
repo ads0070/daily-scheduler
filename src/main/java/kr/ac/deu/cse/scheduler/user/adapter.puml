@@ -1,0 +1,35 @@
+@startuml adapter
+
+interface UserDtoAdapter<T, R> {
+  +getEntity(T) : R
+}
+
+class UserDtoRequestAdapter<User, UserDataMapper> implements UserDtoAdapter {
+  +getEntity(User) : UserDataMapper
+}
+
+class UserDtoResponseAdapter<UserDataMapper, User> implements UserDtoAdapter {
+  +getEntity(UserDataMapper) : User
+}
+
+interface User {
+  ~getUserName() : String
+  ~getPassword() : String
+}
+
+class UserDataMapper <<Entity>> {
+  -id : UUID
+  -username : String
+  -password : String
+  ~authorities : List<Authority>
+  +User(Builder)
+  {static} +builder() : Builder
+}
+
+UserDtoRequestAdapter ..> User
+UserDtoRequestAdapter ..> UserDataMapper
+
+UserDtoResponseAdapter ..> User
+UserDtoResponseAdapter ..> UserDataMapper
+
+@enduml

@@ -5,6 +5,6 @@
   version="3.0">
   <persistence-unit name="default">
 
-    <class>kr.ac.deu.cse.scheduler.user.domain.User</class>
+    <class>kr.ac.deu.cse.scheduler.user.domain.UserDataMapper</class>
   </persistence-unit>
 </persistence>

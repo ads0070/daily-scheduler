@@ -6,12 +6,12 @@
 package user {
 
   package domain {
-    class User <<Entity>> {
+
+    class UserDataMapper <<Entity>> {
       -id : UUID
       -username : String
       -password : String
       ~authorities : List<Authority>
-      -status : UserState
       +User(Builder)
       {static} +builder() : Builder
     }
@@ -19,9 +19,9 @@ package user {
     class Builder <<static>> {
       +username(String) : Builder
       +password(String) : Builder
-      +state() : UserState
       +build() : User
     }
+    note left: Builder
 
     class UserRequest {
       -username : String
@@ -31,83 +31,48 @@ package user {
     class UserResponse {
       -id : UUID
       -username : String
-      -isActive : boolean
     }
-
-    class UserState <<Embeddable>> {
-      #active : boolean
-      +onActivate(User) : void
-      +onDeactivate(User) : void
-      +getUserEntity(User) : UserResponse
-    }
-
-    class ActiveUserState extends UserState {
-      +ActiveUserState()
-      +onActivate(User) : void
-      +onDeactivate(User) : void
-      +getUserEntity(User) : UserResponse
-    }
-
-    class DeactivatedUserState extends UserState {
-      +DeactivatedUserState()
-      +onActivate(User) : void
-      +onDeactivate(User) : void
-      +getUserEntity(User) : UserResponse
-    }
-
-    class UserStateFactory {
-      +getState(boolean) : UserState
-    }
-
-    UserStateFactory - UserState
-    UserStateFactory --> ActiveUserState
-    UserStateFactory --> DeactivatedUserState
-
-    note top of Builder: Builder Pattern
-    note right of UserState: State Pattern
-    note bottom of UserStateFactory: Factory Pattern
   }
 
   package presentation {
     class UserController <<Controller>> {
       -userService : UserService
-      +createResource(UserRequest) : ResponseEntity<?>
-      +getAllUsers() : ResponseEntity<?>
-      +getOneUser(UUID) : ResponseEntity<?>
-      +upadteUser(UUID, UserRequest) : ResponseEntity<?>
-      +deleteUser(UUID) : ResponseEntity<?>
+      +create(UserRequest) : ResponseEntity<?>
+      +readAll() : ResponseEntity<?>
+      +readOne(UUID) : ResponseEntity<?>
+      +update(UUID, UserRequest) : ResponseEntity<?>
+      +delete(UUID) : ResponseEntity<?>
     }
   }
 
   package application {
     class UserService <<Service>> {
-      -userRepository : UserJpaRepository
+      -factory : UserFactory
+      -requestAdapter : UserDtoRequestAdapter
+      -responseAdapter : UserDtoResponseAdapter
+      -repository : UserJpaRepository
+      -passwordEncoder : PasswordEncoder
       +createUser(UserRequest) : UserResponse
-      +retrieveUsers() : List<UserResponse>
-      +retrieveUserById(UUID) : UserResponse
+      +getUsers() : List<UserResponse>
+      +getUserById(UUID) : UserResponse
       +upadteUserById(UUID, UserRequest) : UserResponse
       +deleteUserById(UUID) : void
     }
-
-    note "Facade Pattern" as Facade
-    Facade -> UserService
   }
+  note left: Facade
 
   package infrastructure {
     interface UserJpaRepository <<Repository>>
   }
 
-  User *--> Builder
-  User o--> UserState
-
   UserController ..> UserService
   UserService ..> UserJpaRepository
+  UserJpaRepository ..> UserDataMapper
 
-  UserController ..> UserRequest
-  UserController ..> UserResponse
+  UserDataMapper *--> Builder
+
   UserService ..> UserRequest
   UserService ..> UserResponse
-  UserJpaRepository ..> User
 }
 
 @enduml
