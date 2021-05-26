@@ -2,6 +2,7 @@ package kr.ac.deu.cse.scheduler.user.presentation;
 
 import java.util.List;
 import java.util.UUID;
+import kr.ac.deu.cse.scheduler.interfaces.AbstractController;
 import kr.ac.deu.cse.scheduler.user.application.UserService;
 import kr.ac.deu.cse.scheduler.user.domain.UserRequest;
 import kr.ac.deu.cse.scheduler.user.domain.UserResponse;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @RequestMapping("/users")
 @RepositoryRestController
-public class UserController {
+public class UserController extends AbstractController<UserRequest, UUID> {
 
   private final UserService service;
 
