@@ -2,6 +2,7 @@ package kr.ac.deu.cse.scheduler.schedule.presentation;
 
 import java.util.List;
 import java.util.UUID;
+import kr.ac.deu.cse.scheduler.interfaces.AbstractController;
 import kr.ac.deu.cse.scheduler.schedule.application.TodoService;
 import kr.ac.deu.cse.scheduler.schedule.domain.TodoRequest;
 import kr.ac.deu.cse.scheduler.schedule.domain.TodoResponse;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @RequestMapping("/todos")
 @RepositoryRestController
-public class TodoController {
+public class TodoController extends AbstractController<TodoRequest, UUID> {
 
   private final TodoService service;
 
@@ -28,38 +29,43 @@ public class TodoController {
     this.service = service;
   }
 
+  @Override
   @ResponseBody
   @PostMapping
-  public ResponseEntity<?> createResource(@RequestBody TodoRequest todo) {
-    return ResponseEntity.ok(service.createTodo(todo));
+  public ResponseEntity<?> create(@RequestBody TodoRequest request) {
+    return ResponseEntity.ok(service.createTodo(request));
   }
 
+  @Override
   @ResponseBody
   @GetMapping
-  public ResponseEntity<?> retrieveResources() {
-    List<TodoResponse> response = service.retrieveTodos();
+  public ResponseEntity<?> readAll() {
+    List<TodoResponse> tasks = service.retrieveTodos();
 
-    return ResponseEntity.ok(response);
+    return ResponseEntity.ok(tasks);
   }
 
+  @Override
   @ResponseBody
   @GetMapping("/{id}")
-  public ResponseEntity<?> retrieveResource(@PathVariable UUID id) {
+  public ResponseEntity<?> readOne(@PathVariable UUID id) {
     TodoResponse response = service.retrieveTodoById(id);
 
     return ResponseEntity.ok(response);
   }
 
+  @Override
   @ResponseBody
   @PatchMapping("/{id}")
-  public ResponseEntity<?> updateResource(@PathVariable UUID id, @RequestBody TodoRequest request) {
+  public ResponseEntity<?> update(@PathVariable UUID id, @RequestBody TodoRequest request) {
     TodoResponse response = service.updateTodoById(id, request);
 
     return ResponseEntity.ok(response);
   }
 
+  @Override
   @DeleteMapping("/{id}")
-  public ResponseEntity<?> deleteResource(@PathVariable UUID id) {
+  public ResponseEntity<?> delete(@PathVariable UUID id) {
     service.deleteTodoById(id);
 
     return ResponseEntity.noContent().build();

@@ -1,0 +1,46 @@
+@startuml template-method
+
+package interfaces {
+  abstract class AbstractController<R, ID> {
+    {abstract} +create(R) : ResponseEntity<?>
+    {abstract} +readAll() : ResponseEntity<?>
+    {abstract} +readOne(ID) : ResponseEntity<?>
+    {abstract} +update(ID, R) : ResponseEntity<?>
+    {abstract} +delete(ID) : ResponseEntity<?>
+  }
+}
+
+package user.presentation {
+  class UserController<UserRequest, UUID> <<Controller>>  extends AbstractController {
+    -userService : UserService
+    +create(UserRequest) : ResponseEntity<?>
+    +readAll() : ResponseEntity<?>
+    +readOne(UUID) : ResponseEntity<?>
+    +update(UUID, UserRequest) : ResponseEntity<?>
+    +delete(UUID) : ResponseEntity<?>
+  }
+}
+
+package schedule.presentation {
+  class TaskController<TaskRequest, UUID> <<Controller>>  extends AbstractController {
+    -taskService : TaskService
+    +create(TaskRequest) : ResponseEntity<?>
+    +readAll() : ResponseEntity<?>
+    +readOne(UUID) : ResponseEntity<?>
+    +update(UUID, TaskRequest) : ResponseEntity<?>
+    +delete(UUID) : ResponseEntity<?>
+  }
+
+  class TodoController<TodoRequest, UUID> <<Controller>>  extends AbstractController {
+    -todoService : TodoService
+    +create(TodoRequest) : ResponseEntity<?>
+    +readAll() : ResponseEntity<?>
+    +readOne(UUID) : ResponseEntity<?>
+    +update(UUID, TodoRequest) : ResponseEntity<?>
+    +delete(UUID) : ResponseEntity<?>
+
+  }
+}
+
+
+@enduml
