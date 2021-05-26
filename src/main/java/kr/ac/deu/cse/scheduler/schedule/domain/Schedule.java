@@ -27,6 +27,4 @@ public abstract class Schedule {
 
   protected String title;
   protected String memo;
-
-  public abstract boolean isFinished();
 }

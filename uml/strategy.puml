@@ -1,0 +1,28 @@
+@startuml strategy
+
+abstract class Schedule {
+  #id : UUID
+  #title : String
+  #memo : String
+}
+
+interface ScheduleStrategy {
+  isFinished() : boolean
+}
+
+class Task extends Schedule implements ScheduleStrategy {
+  -beginDate : Date
+  -endDate : Date
+  +isFinished() : boolean
+}
+
+class Todo extends Schedule implements ScheduleStrategy {
+  -groupName : String
+  -colorLabel : String
+  -topFixed : boolean
+  -done : boolean
+  +isFinished() : boolean
+}
+
+
+@enduml

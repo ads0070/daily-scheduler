@@ -14,7 +14,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Table(name = "todos")
 @Entity
-public class Todo extends Schedule {
+public class Todo extends Schedule implements ScheduleStrategy {
 
   private String groupName;
   private String colorLabel;
