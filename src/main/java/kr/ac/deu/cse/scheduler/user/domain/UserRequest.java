@@ -7,4 +7,8 @@ public class UserRequest {
 
   String username;
   String password;
+  String firstName;
+  String lastName;
+  String phoneNumber;
+  String eMail;
 }

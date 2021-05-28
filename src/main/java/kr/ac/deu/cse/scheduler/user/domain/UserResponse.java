@@ -8,4 +8,8 @@ public class UserResponse {
 
   UUID id;
   String username;
+  String firstName;
+  String lastName;
+  String phoneNumber;
+  String eMail;
 }

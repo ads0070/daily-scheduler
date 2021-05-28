@@ -37,7 +37,9 @@ public class UserService {
   public UserResponse createUser(final UserRequest newUser) {
     String hashedPassword = passwordEncoder.encode(newUser.getPassword());
 
-    User user = factory.create(newUser.getUsername(), hashedPassword);
+    User user = factory.create(newUser.getUsername(), hashedPassword, 
+    						   newUser.getFirstName(), newUser.getLastName(),
+    						   newUser.getPhoneNumber(), newUser.getEMail() );
 
     UserDataMapper dataMapper = requestAdapter.getEntity(user);
     dataMapper = repository.save(dataMapper);

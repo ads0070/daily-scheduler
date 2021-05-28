@@ -7,6 +7,10 @@ public class UserDtoRequestAdapter implements UserDtoAdapter<User, UserDataMappe
     return UserDataMapper.builder()
       .username(user.getUsername())
       .password(user.getPassword())
+      .firstName(user.getFirstName())
+      .lastName(user.getLastName())
+      .phoneNumber(user.getPhoneNumber())
+      .eMail(user.getEMail())
       .build();
   }
 }

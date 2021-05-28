@@ -32,6 +32,18 @@ public class UserDataMapper {
 
   @Column(nullable = false)
   private String password;
+  
+  @Column(nullable = false)
+  private String firstName;
+  
+  @Column(nullable = false)
+  private String lastName;
+  
+  @Column(nullable = false)
+  private String phoneNumber;
+  
+  @Column(nullable = false)
+  private String eMail;
 
   @ElementCollection(fetch = FetchType.EAGER)
   List<Authority> authorities;
@@ -39,6 +51,10 @@ public class UserDataMapper {
   public UserDataMapper(Builder builder) {
     this.username = builder.username;
     this.password = builder.password;
+    this.firstName = builder.firstName;
+    this.lastName = builder.lastName;
+    this.phoneNumber = builder.phoneNumber;
+    this.eMail = builder.eMail;
   }
 
   public static Builder builder() {
@@ -49,6 +65,10 @@ public class UserDataMapper {
 
     private String username;
     private String password;
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
+    private String eMail;
 
     Builder() {
     }
@@ -62,6 +82,26 @@ public class UserDataMapper {
       password = value;
       return this;
     }
+    
+    public Builder firstName(String value) {
+    	firstName = value;
+        return this;
+      }
+    
+    public Builder lastName(String value) {
+    	lastName = value;
+        return this;
+      }
+    
+    public Builder phoneNumber(String value) {
+        phoneNumber = value;
+        return this;
+      }
+    
+    public Builder eMail(String value) {
+        eMail = value;
+        return this;
+      }
 
     public UserDataMapper build() {
       return new UserDataMapper(this);

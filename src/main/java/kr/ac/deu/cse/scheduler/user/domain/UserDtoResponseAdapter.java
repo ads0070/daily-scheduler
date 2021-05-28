@@ -4,6 +4,8 @@ public class UserDtoResponseAdapter implements UserDtoAdapter<UserDataMapper, Us
 
   @Override
   public UserResponse getEntity(UserDataMapper user) {
-    return new UserResponse(user.getId(), user.getUsername());
+    return new UserResponse(user.getId(), user.getUsername(),
+    						user.getFirstName(), user.getLastName(),
+    						user.getPhoneNumber(), user.getEMail());
   }
 }
