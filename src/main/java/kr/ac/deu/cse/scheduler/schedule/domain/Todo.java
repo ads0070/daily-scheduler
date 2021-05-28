@@ -22,10 +22,11 @@ public class Todo extends Schedule implements ScheduleStrategy {
   private boolean done;
 
   @Builder
-  public Todo(String title, String memo, String groupName, String colorLabel, boolean topFixed,
+  public Todo(String title, String memo, int importance, String groupName, String colorLabel, boolean topFixed,
     boolean done) {
     this.title = title;
     this.memo = memo;
+    this.importance = importance;
     this.groupName = groupName;
     this.colorLabel = colorLabel;
     this.topFixed = topFixed;

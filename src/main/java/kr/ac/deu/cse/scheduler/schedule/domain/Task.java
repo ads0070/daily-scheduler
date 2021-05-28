@@ -21,9 +21,10 @@ public class Task extends Schedule implements ScheduleStrategy {
   private Date endDate;
 
   @Builder
-  public Task(String title, String memo, Date beginDate, Date endDate) {
+  public Task(String title, String memo, int importance, Date beginDate, Date endDate) {
     this.title = title;
     this.memo = memo;
+    this.importance = importance;
     this.beginDate = beginDate;
     this.endDate = endDate;
   }

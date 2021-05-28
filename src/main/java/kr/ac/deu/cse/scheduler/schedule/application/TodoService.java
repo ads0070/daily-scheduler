@@ -24,6 +24,7 @@ public class TodoService {
     Todo todo = Todo.builder()
       .title(newTodo.getTitle())
       .memo(newTodo.getMemo())
+      .importance(newTodo.getImportance())
       .groupName(newTodo.getGroupName())
       .colorLabel(newTodo.getColorLabel())
       .topFixed(newTodo.isTopFixed())
@@ -36,6 +37,7 @@ public class TodoService {
       .id(todo.getId())
       .title(todo.getTitle())
       .memo(todo.getMemo())
+      .importance(todo.getImportance())
       .groupName(todo.getGroupName())
       .colorLabel(todo.getColorLabel())
       .topFixed(todo.isTopFixed())
@@ -49,6 +51,7 @@ public class TodoService {
         .id(todo.getId())
         .title(todo.getTitle())
         .memo(todo.getMemo())
+        .importance(todo.getImportance())
         .groupName(todo.getGroupName())
         .colorLabel(todo.getColorLabel())
         .topFixed(todo.isTopFixed())
@@ -63,6 +66,7 @@ public class TodoService {
         .id(todo.getId())
         .title(todo.getTitle())
         .memo(todo.getMemo())
+        .importance(todo.getImportance())
         .groupName(todo.getGroupName())
         .colorLabel(todo.getColorLabel())
         .topFixed(todo.isTopFixed())
@@ -76,6 +80,7 @@ public class TodoService {
       .map(todo -> {
         todo.setTitle(newTodo.getTitle());
         todo.setMemo(newTodo.getMemo());
+        todo.setImportance(newTodo.getImportance());
         todo.setGroupName(newTodo.getGroupName());
         todo.setColorLabel(newTodo.getColorLabel());
         todo.setTopFixed(newTodo.isTopFixed());
@@ -87,6 +92,7 @@ public class TodoService {
       .id(updatedTodo.getId())
       .title(updatedTodo.getTitle())
       .memo(updatedTodo.getMemo())
+      .importance(updatedTodo.getImportance())
       .groupName(updatedTodo.getGroupName())
       .colorLabel(updatedTodo.getColorLabel())
       .topFixed(updatedTodo.isTopFixed())

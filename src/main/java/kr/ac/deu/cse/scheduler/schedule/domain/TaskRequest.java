@@ -10,6 +10,7 @@ public class TaskRequest {
 
   String title;
   String memo;
+  int importance;
   Date beginDate;
   Date endDate;
 

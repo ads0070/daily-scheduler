@@ -9,6 +9,7 @@ public class TodoRequest {
 
   String title;
   String memo;
+  int importance;
   String groupName;
   String colorLabel;
   boolean topFixed;

@@ -24,6 +24,7 @@ public class TaskService {
     Task task = Task.builder()
       .title(newTask.getTitle())
       .memo(newTask.getMemo())
+      .importance(newTask.getImportance())
       .beginDate(newTask.getBeginDate())
       .endDate(newTask.getEndDate())
       .build();
@@ -34,6 +35,7 @@ public class TaskService {
       .id(task.getId())
       .title(task.getTitle())
       .memo(task.getMemo())
+      .importance(task.getImportance())
       .beginDate(newTask.getBeginDate())
       .endDate(newTask.getEndDate())
       .build();
@@ -45,6 +47,7 @@ public class TaskService {
         .id(task.getId())
         .title(task.getTitle())
         .memo(task.getMemo())
+        .importance(task.getImportance())
         .beginDate(task.getBeginDate())
         .endDate(task.getEndDate())
         .build()
@@ -57,6 +60,7 @@ public class TaskService {
         .id(task.getId())
         .title(task.getTitle())
         .memo(task.getMemo())
+        .importance(task.getImportance())
         .beginDate(task.getBeginDate())
         .endDate(task.getEndDate())
         .build()
@@ -68,6 +72,7 @@ public class TaskService {
       .map(task -> {
         task.setTitle(newTask.getTitle());
         task.setMemo(newTask.getMemo());
+        task.setImportance(newTask.getImportance());
         task.setBeginDate(newTask.getBeginDate());
         task.setEndDate(newTask.getEndDate());
         return repository.save(task);
@@ -77,6 +82,7 @@ public class TaskService {
       .id(updatedTask.getId())
       .title(updatedTask.getTitle())
       .memo(updatedTask.getMemo())
+      .importance(updatedTask.getImportance())
       .beginDate(updatedTask.getBeginDate())
       .endDate(updatedTask.getEndDate())
       .build();
