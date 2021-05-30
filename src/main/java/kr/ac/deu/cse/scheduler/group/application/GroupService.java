@@ -22,13 +22,12 @@ public class GroupService {
 
 	  @Transactional
 	  public GroupResponse createGroup(final GroupRequest groupRequest) {
-	    Group group = Group.builder().groupName(groupRequest.getGroupName()).memo(groupRequest.getMemo()).build();
+	    Group group = Group.builder().groupName(groupRequest.getGroupName()).build();
 	    
 	    group = groupRepository.save(group);
 	    return GroupResponse.builder()
 	    		.id(group.getId())
 	    		.groupName(group.getGroupName())
-	    		.memo(group.getMemo())
 	    		.build();
 	  }
 
@@ -46,7 +45,6 @@ public class GroupService {
 	    return GroupResponse.builder()
 	    		.id(group.get().getId())
 				.groupName(group.get().getGroupName())
-				.memo(group.get().getMemo())
 				.build();
 	    }
 
@@ -55,13 +53,11 @@ public class GroupService {
 		   Group updatedGroup = groupRepository.findById(id)
 				   .map(group -> {
 					   group.setGroupName(newGroup.getGroupName());
-					   group.setMemo(newGroup.getMemo());
 					   return groupRepository.save(group);
 				   }).orElseThrow();
 		return GroupResponse.builder()
 				.id(updatedGroup.getId())
 				.groupName(updatedGroup.getGroupName())
-				.memo(updatedGroup.getMemo())
 				.build();
 	   }
 

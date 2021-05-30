@@ -14,7 +14,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
 @Table(name = "groups")
 @Entity
 public class Group {
@@ -23,11 +22,9 @@ public class Group {
 	  @GeneratedValue
 	  private UUID id;
 	  private String groupName;
-	  private String memo;
 	 
 	  @Builder
-	  public Group(String groupName, String memo) {
+	  public Group(String groupName) {
 	    this.groupName = groupName;
-	    this.memo = memo;
 	  }
 }

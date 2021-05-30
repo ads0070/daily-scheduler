@@ -10,5 +10,4 @@ import lombok.Value;
 public class GroupResponse {
 	UUID id;
 	String groupName;
-	String memo;
 }

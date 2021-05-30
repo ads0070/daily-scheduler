@@ -5,5 +5,4 @@ import lombok.Value;
 @Value
 public class GroupRequest {
 	String groupName;
-	String memo;
 }

@@ -52,18 +52,23 @@ public class UserService {
       .map(responseAdapter::getEntity)
       .collect(Collectors.toList());
   }
-
+  
   public UserResponse getUserById(UUID id) {
     return repository.findById(id)
       .map(responseAdapter::getEntity)
       .orElseThrow(() -> new RuntimeException(String.format("User id %s is none", id)));
   }
-
+  
+  public UUID getUserByUsername(String username) {
+	    UserDataMapper user = repository.findByUsername(username);
+	    return user.getId();
+  }
+  
   @Transactional
   public UserResponse updateUserById(UUID id, UserRequest newUser) {
     UserDataMapper updatedUser = repository.findById(id)
       .map(user -> {
-        user.setUsername(newUser.getUsername());
+        user.setPassword(passwordEncoder.encode(newUser.getPassword()));
         return repository.save(user);
       }).orElseThrow(() -> new RuntimeException(String.format("User id %s is none", id)));
 
