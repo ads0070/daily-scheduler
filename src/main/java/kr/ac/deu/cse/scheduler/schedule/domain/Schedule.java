@@ -19,7 +19,7 @@ import lombok.ToString;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "schedules")
 @Entity
-public abstract class Schedule {
+public abstract class Schedule implements ScheduleStrategy {
 
   @Id
   @GeneratedValue

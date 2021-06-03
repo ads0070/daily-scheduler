@@ -15,7 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Table(name = "tasks")
 @Entity
-public class Task extends Schedule implements ScheduleStrategy {
+public class Task extends Schedule {
 
   private Date beginDate;
   private Date endDate;
