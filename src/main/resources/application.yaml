@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: local
+    active: test
   data:
     rest:
       base-path: /api
