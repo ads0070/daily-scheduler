@@ -25,8 +25,6 @@ public class TodoService {
       .title(newTodo.getTitle())
       .memo(newTodo.getMemo())
       .importance(newTodo.getImportance())
-      .groupName(newTodo.getGroupName())
-      .colorLabel(newTodo.getColorLabel())
       .topFixed(newTodo.isTopFixed())
       .done(newTodo.isDone())
       .build();
@@ -38,8 +36,6 @@ public class TodoService {
       .title(todo.getTitle())
       .memo(todo.getMemo())
       .importance(todo.getImportance())
-      .groupName(todo.getGroupName())
-      .colorLabel(todo.getColorLabel())
       .topFixed(todo.isTopFixed())
       .done(todo.isDone())
       .build();
@@ -52,8 +48,6 @@ public class TodoService {
         .title(todo.getTitle())
         .memo(todo.getMemo())
         .importance(todo.getImportance())
-        .groupName(todo.getGroupName())
-        .colorLabel(todo.getColorLabel())
         .topFixed(todo.isTopFixed())
         .done(todo.isDone())
         .build()
@@ -67,8 +61,6 @@ public class TodoService {
         .title(todo.getTitle())
         .memo(todo.getMemo())
         .importance(todo.getImportance())
-        .groupName(todo.getGroupName())
-        .colorLabel(todo.getColorLabel())
         .topFixed(todo.isTopFixed())
         .done(todo.isDone())
         .build()
@@ -81,8 +73,6 @@ public class TodoService {
         todo.setTitle(newTodo.getTitle());
         todo.setMemo(newTodo.getMemo());
         todo.setImportance(newTodo.getImportance());
-        todo.setGroupName(newTodo.getGroupName());
-        todo.setColorLabel(newTodo.getColorLabel());
         todo.setTopFixed(newTodo.isTopFixed());
         todo.setDone(newTodo.isDone());
         return repository.save(todo);
@@ -93,8 +83,6 @@ public class TodoService {
       .title(updatedTodo.getTitle())
       .memo(updatedTodo.getMemo())
       .importance(updatedTodo.getImportance())
-      .groupName(updatedTodo.getGroupName())
-      .colorLabel(updatedTodo.getColorLabel())
       .topFixed(updatedTodo.isTopFixed())
       .done(updatedTodo.isDone())
       .build();

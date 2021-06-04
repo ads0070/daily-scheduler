@@ -16,19 +16,15 @@ import lombok.ToString;
 @Entity
 public class Todo extends Schedule {
 
-  private String groupName;
-  private String colorLabel;
   private boolean topFixed;
   private boolean done;
 
   @Builder
-  public Todo(String title, String memo, int importance, String groupName, String colorLabel, boolean topFixed,
+  public Todo(String title, String memo, int importance, boolean topFixed,
     boolean done) {
     this.title = title;
     this.memo = memo;
     this.importance = importance;
-    this.groupName = groupName;
-    this.colorLabel = colorLabel;
     this.topFixed = topFixed;
     this.done = done;
   }
