@@ -74,6 +74,21 @@ public class UserService {
 
     return responseAdapter.getEntity(updatedUser);
   }
+  
+  @Transactional
+  public UserResponse updateUserInfoById(UUID id, UserRequest newUser) {
+    UserDataMapper updatedUser = repository.findById(id)
+      .map(user -> {
+        user.setPassword(passwordEncoder.encode(newUser.getPassword()));
+        user.setFirstName(newUser.getFirstName());
+        user.setLastName(newUser.getLastName());
+        user.setPhoneNumber(newUser.getPhoneNumber());
+        user.setEMail(newUser.getEMail());
+        return repository.save(user);
+      }).orElseThrow(() -> new RuntimeException(String.format("User id %s is none", id)));
+
+    return responseAdapter.getEntity(updatedUser);
+  }
 
   @Transactional
   public void deleteUserById(UUID id) {
