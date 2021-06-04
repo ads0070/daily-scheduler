@@ -56,7 +56,7 @@ public class TaskController extends AbstractController<TaskRequest, UUID> {
 
   @Override
   @ResponseBody
-  @PatchMapping("/{id}")
+  @PostMapping("/patch/{id}")
   public ResponseEntity<?> update(@PathVariable UUID id, @RequestBody TaskRequest request) {
     TaskResponse response = service.updateTaskById(id, request);
 
@@ -64,7 +64,7 @@ public class TaskController extends AbstractController<TaskRequest, UUID> {
   }
 
   @Override
-  @DeleteMapping("/{id}")
+  @PostMapping("/delete/{id}")
   public ResponseEntity<?> delete(@PathVariable UUID id) {
     service.deleteTaskById(id);
 

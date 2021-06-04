@@ -73,16 +73,16 @@ public class UserController extends AbstractController<UserRequest, UUID> {
   }
 
   @ResponseBody
-  @PatchMapping("/{id}")
+  @PostMapping("/patch/{id}")
   public ResponseEntity<?> update(@PathVariable final UUID id,
     @RequestBody final UserRequest request) {
     UserResponse response = service.updateUserById(id, request);
 
     return ResponseEntity.ok(response);
   }
-
-  @ResponseStatus(HttpStatus.NO_CONTENT)
-  @DeleteMapping("/{id}")
+  
+  @ResponseBody
+  @PostMapping("/delete/{id}")
   public ResponseEntity<?> delete(@PathVariable final UUID id) {
     service.deleteUserById(id);
 

@@ -56,7 +56,7 @@ public class TodoController extends AbstractController<TodoRequest, UUID> {
 
   @Override
   @ResponseBody
-  @PatchMapping("/{id}")
+  @PostMapping("/patch/{id}")
   public ResponseEntity<?> update(@PathVariable UUID id, @RequestBody TodoRequest request) {
     TodoResponse response = service.updateTodoById(id, request);
 
@@ -64,7 +64,7 @@ public class TodoController extends AbstractController<TodoRequest, UUID> {
   }
 
   @Override
-  @DeleteMapping("/{id}")
+  @PostMapping("/delete/{id}")
   public ResponseEntity<?> delete(@PathVariable UUID id) {
     service.deleteTodoById(id);
 
