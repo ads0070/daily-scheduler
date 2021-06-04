@@ -82,7 +82,7 @@ public class UserController extends AbstractController<UserRequest, UUID> {
   }
   
   @ResponseBody
-  @PostMapping("/delete/{id}")
+  @GetMapping("/delete/{id}")
   public ResponseEntity<?> delete(@PathVariable final UUID id) {
     service.deleteUserById(id);
 
