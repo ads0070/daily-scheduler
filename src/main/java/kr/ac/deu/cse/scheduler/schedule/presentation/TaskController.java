@@ -64,7 +64,7 @@ public class TaskController extends AbstractController<TaskRequest, UUID> {
   }
 
   @Override
-  @PostMapping("/delete/{id}")
+  @GetMapping("/delete/{id}")
   public ResponseEntity<?> delete(@PathVariable UUID id) {
     service.deleteTaskById(id);
 

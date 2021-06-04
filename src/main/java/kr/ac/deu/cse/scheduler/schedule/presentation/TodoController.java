@@ -64,7 +64,7 @@ public class TodoController extends AbstractController<TodoRequest, UUID> {
   }
 
   @Override
-  @PostMapping("/delete/{id}")
+  @GetMapping("/delete/{id}")
   public ResponseEntity<?> delete(@PathVariable UUID id) {
     service.deleteTodoById(id);
 
