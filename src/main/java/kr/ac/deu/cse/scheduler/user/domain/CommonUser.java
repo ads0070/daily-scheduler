@@ -17,7 +17,8 @@ public class CommonUser implements User {
     this.firstName = firstName;
     this.lastName = lastName;
     this.phoneNumber = phoneNumber;
-    this.eMail = eMail; 
+    this.eMail = eMail;
+    this.state = new UserStatePending();
   }
 
   @Override
@@ -29,22 +30,22 @@ public class CommonUser implements User {
   public String getPassword() {
     return password;
   }
-  
+
   @Override
   public String getFirstName() {
     return firstName;
   }
-  
+
   @Override
   public String getLastName() {
     return lastName;
   }
-  
+
   @Override
   public String getPhoneNumber() {
     return phoneNumber;
   }
-  
+
   @Override
   public String getEMail() {
     return eMail;
@@ -53,5 +54,10 @@ public class CommonUser implements User {
   @Override
   public void setState(UserState state) {
     this.state = state;
+  }
+
+  @Override
+  public UserState getState() {
+    return state;
   }
 }
