@@ -1,5 +1,8 @@
 # README
 
+2021년 1학기 소프트웨어설계공학 팀 프로젝트  
+디자인패턴을 적용한 소프트웨어설계
+
 ## Table of Contents
 
 - [Project Structure](#project-structure)
